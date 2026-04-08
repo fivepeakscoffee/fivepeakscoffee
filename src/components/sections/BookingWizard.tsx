@@ -84,11 +84,31 @@ export function BookingWizard() {
     setIsSubmitting(true);
     setError(null);
     try {
+      // 1. Send to Formspree for email delivery
+      try {
+        await fetch('https://formspree.io/f/fivepeakscoffee@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            subject: `New Inquiry: ${formData.eventType} for ${formData.name}`,
+            ...formData
+          })
+        });
+      } catch (formspreeErr) {
+        console.error('Formspree submission failed:', formspreeErr);
+        // We continue to Firestore even if Formspree fails
+      }
+
+      // 2. Save to Firestore as backup/record
       const path = 'inquiries';
       await addDoc(collection(db, path), {
         ...formData,
         createdAt: serverTimestamp()
       });
+      
       nextStep();
     } catch (err) {
       handleFirestoreError(err, OperationType.CREATE, 'inquiries');
