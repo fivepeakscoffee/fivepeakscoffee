@@ -87,7 +87,7 @@ export function Home() {
               </p>
               <div className="grid grid-cols-2 gap-4 mb-12 lg:mb-0">
                 {[
-                  "https://i.postimg.cc/CLf8SKL7/IMG-20240309-WA0017.jpg",
+                  "https://i.postimg.cc/CLf8SKL7/IMG_20240309_WA0017.jpg",
                   "https://i.postimg.cc/Gt9PMYBx/20260305_124658.jpg",
                   "https://i.postimg.cc/5yj5PvHF/20260303_202156.jpg",
                   "https://i.postimg.cc/ZqhcTCgZ/20251114_075037.jpg"
