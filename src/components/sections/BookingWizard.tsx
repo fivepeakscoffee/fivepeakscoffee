@@ -85,20 +85,26 @@ export function BookingWizard() {
     setError(null);
     try {
       // 1. Send to Formspree for email delivery
+      // Note: Using the direct email endpoint. Formspree will send a verification email on the first submission.
       try {
-        await fetch('https://formspree.io/f/fivepeakscoffee@gmail.com', {
+        const response = await fetch('https://formspree.io/fivepeakscoffee@gmail.com', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            subject: `New Inquiry: ${formData.eventType} for ${formData.name}`,
+            _subject: `New Inquiry: ${formData.eventType} from ${formData.name}`,
             ...formData
           })
         });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Formspree error response:', errorData);
+        }
       } catch (formspreeErr) {
-        console.error('Formspree submission failed:', formspreeErr);
+        console.error('Formspree submission network error:', formspreeErr);
         // We continue to Firestore even if Formspree fails
       }
 
