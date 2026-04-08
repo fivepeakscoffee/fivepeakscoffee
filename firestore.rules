@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: inquiries
+    // Document ID: auto-generated
+    // Fields:
+    //   - eventType: string (required) - The type of event
+    //   - guests: string (required) - Estimated number of guests
+    //   - date: string (optional) - The date of the event
+    //   - location: string (required) - The city or venue
+    //   - name: string (required) - The full name of the inquirer
+    //   - email: string (required) - The email address
+    //   - notes: string (optional) - Additional notes
+    //   - createdAt: timestamp (required) - When the inquiry was submitted
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "fivepeakscoffee@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidInquiry(data) {
+      return data.keys().hasAll(['eventType', 'guests', 'location', 'name', 'email', 'createdAt']) &&
+             data.eventType is string && data.eventType.size() > 0 && data.eventType.size() < 100 &&
+             data.guests is string && data.guests.size() > 0 && data.guests.size() < 50 &&
+             data.location is string && data.location.size() > 0 && data.location.size() < 200 &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.email is string && data.email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") &&
+             data.createdAt is timestamp;
+    }
+
+    match /inquiries/{inquiryId} {
+      // Allow anyone to create an inquiry (even unauthenticated users for a public contact form)
+      // But we validate the data strictly.
+      allow create: if isValidInquiry(request.resource.data);
+      
+      // Only admins can read or manage inquiries
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow write: if isAdmin();
+    }
+  }
+}

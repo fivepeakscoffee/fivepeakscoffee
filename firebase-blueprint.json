@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "A booking inquiry from a potential client.",
+      "type": "object",
+      "properties": {
+        "eventType": { "type": "string", "description": "The type of event (e.g., corporate, wedding)." },
+        "guests": { "type": "string", "description": "Estimated number of guests." },
+        "date": { "type": "string", "description": "The date of the event." },
+        "location": { "type": "string", "description": "The city or venue of the event." },
+        "name": { "type": "string", "description": "The full name of the inquirer." },
+        "email": { "type": "string", "description": "The email address of the inquirer." },
+        "notes": { "type": "string", "description": "Additional notes or requirements." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the inquiry was submitted." }
+      },
+      "required": ["eventType", "guests", "location", "name", "email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Collection of booking inquiries."
+    }
+  }
+}
