@@ -85,23 +85,32 @@ export function BookingWizard() {
     setError(null);
     try {
       // 1. Send to Formspree for email delivery
-      // Note: Using the direct email endpoint. Formspree will send a verification email on the first submission.
+      // Note: Using the /f/ endpoint which is more standard. 
+      // Formspree will send a verification email on the first submission if not already verified.
       try {
-        const response = await fetch('https://formspree.io/fivepeakscoffee@gmail.com', {
+        const form = new FormData();
+        form.append('_subject', `New Inquiry: ${formData.eventType} from ${formData.name}`);
+        form.append('_replyto', formData.email);
+        form.append('name', formData.name);
+        form.append('email', formData.email);
+        form.append('eventType', formData.eventType);
+        form.append('guests', formData.guests);
+        form.append('location', formData.location);
+        form.append('notes', formData.notes);
+
+        const response = await fetch('https://formspree.io/f/fivepeakscoffee@gmail.com', {
           method: 'POST',
+          body: form,
           headers: {
-            'Content-Type': 'application/json',
             'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            _subject: `New Inquiry: ${formData.eventType} from ${formData.name}`,
-            ...formData
-          })
+          }
         });
 
         if (!response.ok) {
           const errorData = await response.json();
           console.error('Formspree error response:', errorData);
+        } else {
+          console.log('Formspree submission successful');
         }
       } catch (formspreeErr) {
         console.error('Formspree submission network error:', formspreeErr);
