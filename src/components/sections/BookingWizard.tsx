@@ -56,7 +56,7 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
   throw new Error(JSON.stringify(errInfo));
 }
 
-type Step = 1 | 2 | 3 | 4;
+type Step = 1 | 2 | 3 | 4 | 5;
 
 export function BookingWizard() {
   const [step, setStep] = useState<Step>(1);
@@ -131,7 +131,7 @@ export function BookingWizard() {
     <div className="glass p-6 md:p-12 rounded-sm border-t-4 border-t-accent relative overflow-hidden min-h-[500px] flex flex-col">
       <div className="flex justify-between items-center mb-12">
         <div className="flex gap-2">
-          {[1, 2, 3, 4].map((i) => (
+          {[1, 2, 3, 4, 5].map((i) => (
             <div
               key={i}
               className={cn(
@@ -141,7 +141,7 @@ export function BookingWizard() {
             />
           ))}
         </div>
-        <span className="mono-label text-accent">Step {step} of 4</span>
+        <span className="mono-label text-accent">Step {step} of 5</span>
       </div>
 
       <div className="flex-grow">
@@ -220,6 +220,29 @@ export function BookingWizard() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-8"
             >
+              <h3 className="text-3xl sm:text-4xl font-display tracking-tight">Tell us more</h3>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="mono-label">Additional Notes / Event Description</label>
+                  <textarea
+                    placeholder="Tell us about your vision, specific requirements, or anything else we should know..."
+                    value={formData.notes}
+                    onChange={(e) => updateData('notes', e.target.value)}
+                    className="w-full bg-transparent border-b border-white/20 py-4 text-xl sm:text-2xl focus:border-accent outline-none transition-colors min-h-[150px] resize-none"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {step === 4 && (
+            <motion.div
+              key="step4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-8"
+            >
               <h3 className="text-3xl sm:text-4xl font-display tracking-tight">Your details</h3>
               <div className="space-y-6">
                 <div className="space-y-2">
@@ -246,9 +269,9 @@ export function BookingWizard() {
             </motion.div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <motion.div
-              key="step4"
+              key="step5"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="flex flex-col items-center justify-center text-center py-12 space-y-6"
@@ -279,7 +302,7 @@ export function BookingWizard() {
         </AnimatePresence>
       </div>
 
-      {step < 4 && (
+      {step < 5 && (
         <div className="flex justify-between mt-12 pt-8 border-t border-white/5">
           {step > 1 ? (
             <button
@@ -290,7 +313,7 @@ export function BookingWizard() {
             </button>
           ) : <div />}
           
-          {step < 3 ? (
+          {step < 4 ? (
             <button
               onClick={nextStep}
               disabled={step === 2 && (!formData.guests || !formData.location)}
