@@ -84,37 +84,24 @@ export function BookingWizard() {
     setIsSubmitting(true);
     setError(null);
     try {
-      // 1. Send to Formspree for email delivery
-      // Note: Using the /f/ endpoint which is more standard. 
-      // Formspree will send a verification email on the first submission if not already verified.
+      // 1. Send to FormSubmit.co for email delivery
+      // This service is often more reliable for direct email-based submissions
       try {
-        const form = new FormData();
-        form.append('_subject', `New Inquiry: ${formData.eventType} from ${formData.name}`);
-        form.append('_replyto', formData.email);
-        form.append('name', formData.name);
-        form.append('email', formData.email);
-        form.append('eventType', formData.eventType);
-        form.append('guests', formData.guests);
-        form.append('location', formData.location);
-        form.append('notes', formData.notes);
-
-        const response = await fetch('https://formspree.io/f/fivepeakscoffee@gmail.com', {
+        await fetch('https://formsubmit.co/ajax/fivepeakscoffee@gmail.com', {
           method: 'POST',
-          body: form,
           headers: {
+            'Content-Type': 'application/json',
             'Accept': 'application/json'
-          }
+          },
+          body: JSON.stringify({
+            _subject: `New Inquiry: ${formData.eventType} from ${formData.name}`,
+            _captcha: "false",
+            _template: "table",
+            ...formData
+          })
         });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('Formspree error response:', errorData);
-        } else {
-          console.log('Formspree submission successful');
-        }
-      } catch (formspreeErr) {
-        console.error('Formspree submission network error:', formspreeErr);
-        // We continue to Firestore even if Formspree fails
+      } catch (formSubmitErr) {
+        console.error('FormSubmit submission error:', formSubmitErr);
       }
 
       // 2. Save to Firestore as backup/record
