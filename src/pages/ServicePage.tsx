@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, Coffee, Zap, Users, ShieldCheck, Award, Globe } from 'lucide-react';
+import { SEO } from '../components/SEO';
 import { cn } from '../lib/utils';
 import { ContactSection } from '../components/sections/ContactSection';
 
@@ -50,6 +51,12 @@ export function ServicePage() {
 
   return (
     <main className="pt-48 pb-32 px-6 md:px-12 bg-background">
+      <SEO 
+        title={`${service.title} Catering`}
+        description={service.description}
+        canonical={`https://www.fivepeakscoffee.co.uk/#/services/${id}`}
+        ogImage={service.image}
+      />
       <div className="max-w-[1800px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center mb-32">
           <div className="lg:col-span-6 space-y-12">

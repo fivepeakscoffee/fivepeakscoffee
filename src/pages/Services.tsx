@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Coffee, Zap, Users, Globe, Award, ShieldCheck, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 import { cn } from '../lib/utils';
 import { ContactSection } from '../components/sections/ContactSection';
 
@@ -35,6 +36,11 @@ const services = [
 export function Services() {
   return (
     <main className="pt-48 pb-32 px-6 md:px-12 bg-background">
+      <SEO 
+        title="Our Services"
+        description="Explore our range of premium barista coffee catering services for corporate events, weddings, and festivals across the UK."
+        canonical="https://www.fivepeakscoffee.co.uk/#/services"
+      />
       <div className="max-w-[1800px] mx-auto">
         <div className="max-w-4xl mb-24">
           <span className="mono-label text-accent mb-4 block">OUR SERVICES</span>

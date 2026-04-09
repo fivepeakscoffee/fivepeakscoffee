@@ -4,6 +4,7 @@ import { ArrowRight, Coffee, Zap, Users, MapPin, Award, Globe, ShieldCheck } fro
 import { BentoGrid } from '../components/sections/BentoGrid';
 import { ContactSection } from '../components/sections/ContactSection';
 import { FAQ } from '../components/sections/FAQ';
+import { SEO } from '../components/SEO';
 import { Link, useLocation } from 'react-router-dom';
 
 export function Home() {
@@ -20,6 +21,7 @@ export function Home() {
 
   return (
     <main className="relative">
+      <SEO />
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center px-6 md:px-12 pt-24">
         <div className="absolute inset-0 z-0">

@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { CheckCircle2, ArrowLeft, MapPin, Users, Calendar, Award } from 'lucide-react';
+import { SEO } from '../components/SEO';
 import { ContactSection } from '../components/sections/ContactSection';
 
 const cases = [
@@ -42,6 +43,12 @@ export function RecentPeakDetail() {
 
   return (
     <main className="bg-background text-white min-h-screen">
+      <SEO 
+        title={`${study.title} | Recent Peak`}
+        description={study.description}
+        canonical={`https://www.fivepeakscoffee.co.uk/#/recent-peaks/${study.id}`}
+        ogImage={study.image}
+      />
       {/* Hero Header */}
       <section className="relative h-[70vh] flex items-end px-6 md:px-12 pb-24">
         <div className="absolute inset-0 z-0">

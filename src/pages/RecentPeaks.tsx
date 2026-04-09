@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, MapPin, Users, Calendar, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 import { cn } from '../lib/utils';
 
 import { ContactSection } from '../components/sections/ContactSection';
@@ -22,6 +23,11 @@ const cases = [
 export function RecentPeaks() {
   return (
     <main className="pt-48 pb-32 px-6 md:px-12 bg-background">
+      <SEO 
+        title="Recent Peaks | Case Studies"
+        description="Take a look at our recent projects, from high-capacity corporate conferences to remote festivals across the UK."
+        canonical="https://www.fivepeakscoffee.co.uk/#/recent-peaks"
+      />
       <div className="max-w-[1800px] mx-auto">
         <div className="max-w-4xl mb-24">
           <span className="mono-label text-accent mb-4 block">RECENT PEAKS</span>

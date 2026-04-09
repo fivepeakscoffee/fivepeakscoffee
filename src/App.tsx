@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Preloader } from './components/layout/Preloader';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -15,6 +16,7 @@ import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { Services } from './pages/Services';
 import { ServicePage } from './pages/ServicePage';
+import { FAQPage } from './pages/FAQPage';
 
 function App() {
   useEffect(() => {
@@ -31,24 +33,27 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-white selection:bg-accent selection:text-black">
-      <Router>
-        <ScrollToTop />
-        <Preloader />
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/recent-peaks" element={<RecentPeaks />} />
-          <Route path="/recent-peaks/:id" element={<RecentPeakDetail />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/services/:id" element={<ServicePage />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/contact" element={<Home />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </div>
+    <HelmetProvider>
+      <div className="min-h-screen bg-background text-white selection:bg-accent selection:text-black">
+        <Router>
+          <ScrollToTop />
+          <Preloader />
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/recent-peaks" element={<RecentPeaks />} />
+            <Route path="/recent-peaks/:id" element={<RecentPeakDetail />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/:id" element={<ServicePage />} />
+            <Route path="/faqs" element={<FAQPage />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/contact" element={<Home />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </div>
+    </HelmetProvider>
   );
 }
 
