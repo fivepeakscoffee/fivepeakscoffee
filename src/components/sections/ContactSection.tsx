@@ -15,12 +15,8 @@ export function ContactSection() {
           <BookingWizard />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto w-full border-t border-white/10 pt-16">
-          <div className="space-y-2 text-center md:text-left">
-            <span className="mono-label text-accent">Direct Line</span>
-            <a href="tel:07384504405" className="block text-3xl md:text-5xl font-display text-white hover:text-accent transition-colors">07384504405</a>
-          </div>
-          <div className="space-y-2 text-center md:text-right">
+        <div className="max-w-4xl mx-auto w-full border-t border-white/10 pt-16 text-center">
+          <div className="space-y-2">
             <span className="mono-label text-accent">Digital Mail</span>
             <a href="mailto:fivepeakscoffee@gmail.com" className="block text-3xl md:text-5xl font-display text-white hover:text-accent transition-colors break-all">fivepeakscoffee@gmail.com</a>
           </div>

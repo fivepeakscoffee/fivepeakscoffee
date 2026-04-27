@@ -108,8 +108,8 @@ export function Navbar() {
 
             <div className="mt-auto pt-12 border-t border-white/10">
               <div className="flex flex-col gap-4">
-                <span className="mono-label text-accent">Direct Line</span>
-                <a href="tel:07384504405" className="text-3xl font-display">07384504405</a>
+                <span className="mono-label text-accent">Digital Mail</span>
+                <a href="mailto:fivepeakscoffee@gmail.com" className="text-xl sm:text-2xl font-display break-all hover:text-accent transition-colors">fivepeakscoffee@gmail.com</a>
               </div>
             </div>
           </motion.div>
